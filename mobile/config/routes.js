@@ -6,6 +6,7 @@ import Video from '../components/Video';
 import Edit from '../components/Edit';
 import Like from '../components/Like';
 import Chat from '../components/Chat';
+import Ready from '../components/Ready';
 
 const stackRoutes = {
   Home: { screen: Main, 
@@ -59,6 +60,14 @@ const stackRoutes = {
   } },
   Chat: { screen: Chat,  navigationOptions: {
     title: 'Chat',
+    headerTintColor: "white",
+    headerStyle: {
+      backgroundColor: '#FF5A5F', 
+      elevation: null
+    },
+  }},
+  Ready: { screen: Ready,  navigationOptions: {
+    title: 'Ready',
     headerTintColor: "white",
     headerStyle: {
       backgroundColor: '#FF5A5F', 

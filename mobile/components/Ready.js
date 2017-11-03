@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux'
-import { View, Text, StyleSheet, Button } from 'react-native';
+import { connect } from 'react-redux';
+import CountdownCircle from 'react-native-countdown-circle';
+import { View, Text, StyleSheet, StatusBar } from 'react-native';
+import { 
+  Button,
+  SearchBar,
+ } from 'react-native-elements';
 import io from 'socket.io-client';
 
 class Ready extends Component {
@@ -35,9 +40,22 @@ class Ready extends Component {
   }
 
   render(){
+    const { navigate } = this.props.navigation;
     return (
       <View>
-        <Text>Hello Friend</Text>
+        <StatusBar barStyle='light-content'/>
+        <Text>
+          Waiting for users to join.
+          {this.state.srms.length > 0 ? <CountdownCircle
+           seconds={5}
+           radius={30}
+           borderWidth={8}
+           color="#ff003f"
+           bgColor="#fff"
+           textStyle={{ fontSize: 20 }}
+           onTimeElapsed={() => navigate('Video')}
+          /> : null}
+        </Text>
       </View>
     )
   }

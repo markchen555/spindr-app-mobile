@@ -9,7 +9,8 @@ import {
   TouchableOpacity, 
   TouchableWithoutFeedback,
   Animated, 
-  Dimensions } from 'react-native';
+  Dimensions,
+  Easing } from 'react-native';
 import { Button } from 'react-native-elements';
 import axios from 'axios';
 import Icon from 'react-native-vector-icons/dist/FontAwesome'
@@ -39,42 +40,44 @@ class Main extends Component {
     Animated.timing(this.state.scale, {
       toValue: 3,
       duration: 400,
-      top: -50
+      top: -50,
+      easing: Easing.linear
     }).start(() => {
       this.setState({
-        scale: new Animated.Value(0)
+        scale: new Animated.Value(0.1)
       });
       this.props.navigation.navigate('Ready');
     });
   }
+  
 
-  readyToPlay = () => {
-    axios.get(`http://13.57.52.97:3000/api/userId/${this.props.userId}`)
-    .then(info => {
-      this.setState({ userInfo : this.state.fake });
-      console.log('UserInfo:', this.state.userInfo);
-    })
-    .then(() => {
-      this.postToFlask();1
-    })
-    .catch(err => {
-      console.log('Fetch err:', err);
-    })
-  }
-  //
-  postToFlask = () => {
-    console.log('im in posttoflask', this.state.userInfo)
-    axios.post('http://54.153.58.44:5000/',  this.state.userInfo, {
-      headers: {
-        'Content-Type': 'application/json'
-      }})
-    .then(() => {
-      console.log('Posted to flask:', this.state.userInfo);
-    })
-    .catch(err => {
-      console.log('posttoflask err', err);
-    })
-  }
+  // readyToPlay = () => {
+  //   axios.get(`http://13.57.52.97:3000/api/userId/${this.props.userId}`)
+  //   .then(info => {
+  //     this.setState({ userInfo : this.state.fake });
+  //     console.log('UserInfo:', this.state.userInfo);
+  //   })
+  //   .then(() => {
+  //     this.postToFlask();1
+  //   })
+  //   .catch(err => {
+  //     console.log('Fetch err:', err);
+  //   })
+  // }
+  // //
+  // postToFlask = () => {
+  //   console.log('im in posttoflask', this.state.userInfo)
+  //   axios.post('http://54.153.58.44:5000/',  this.state.userInfo, {
+  //     headers: {
+  //       'Content-Type': 'application/json'
+  //     }})
+  //   .then(() => {
+  //     console.log('Posted to flask:', this.state.userInfo);
+  //   })
+  //   .catch(err => {
+  //     console.log('posttoflask err', err);
+  //   })
+  // }
 
   render() {
     const { navigate } = this.props.navigation;
@@ -92,7 +95,8 @@ class Main extends Component {
             scale: this.state.scale
           }]
         }} />
-        <TouchableWithoutFeedback  onPress = {() => {this.readyToPlay(), this.animateOnPress()}}>
+        {/* <TouchableWithoutFeedback  onPress = {() => {this.readyToPlay(), this.animateOnPress()}}> */}
+        <TouchableWithoutFeedback  onPress = {() => { this.animateOnPress()}}>
           <Image
           style={styles.join}
           source={require('../images/Join.png')}
