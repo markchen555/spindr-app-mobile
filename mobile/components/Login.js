@@ -52,10 +52,6 @@ class Login extends Component {
         <StatusBar
         barStyle='light-content'/>
         <View style={styles.textSection}>
-          {/* <Image
-            style={styles.logo}
-            source={require('../images/Login_Logo.png')}
-          /> */}
           <Animated.Image
           style={{
           width: 110,

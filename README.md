@@ -37,11 +37,11 @@ you need to also add the code to `~/.zshrc`
 
 Fork a copy from github or download the repository on your computer, unzip it and launch the terminal at the root directory of the folder.
 
-0. Request for the .env file.
 1. Run `npm install` to install all dependency to your local machine.
 2. Run `npm start` to activate emulate selection screen.
-   * Run `react-native run-ios` for emulate in iOS.
-   * Click `react-native run-ios` for emulate in android.
+   * Connect your iphone and Run Build in Xcode if you want to emulate on iPhone
+   * Run `react-native run-ios` if you want to emulate in iOS.
+   * Run `react-native run-android` if you want to emulate in Android
 
 ---
 

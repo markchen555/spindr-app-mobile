@@ -46,7 +46,7 @@ class Main extends Component {
       this.setState({
         scale: new Animated.Value(0.1)
       });
-      this.props.navigation.navigate('Ready');
+      this.props.navigation.navigate('Video');
     });
   }
   

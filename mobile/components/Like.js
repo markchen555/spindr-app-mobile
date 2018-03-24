@@ -29,13 +29,13 @@ class Like extends Component {
         </View>
         <View style={styles.btnSection}>
           <TouchableOpacity
-          onPress = {() => navigate('Video')}
+          onPress = {() => navigate('Main')}
           style={styles.btnX}
           >
             <Icon name={"times"}  size={35} color="#FF5A5F" />
           </TouchableOpacity>
           <TouchableOpacity
-          onPress = {() => navigate('Video')}
+          onPress = {() => navigate('Main')}
           style={styles.btnHeart}
           >
             <Icon name={"heart-o"}  size={35} color="#fff" />

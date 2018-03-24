@@ -65,27 +65,28 @@ class Video extends Component {
   componentDidMount() {
     container = this;
     
-    console.log('this is this before in cdm: ', this.state)
-    this.setState({remoteList: {}, pcPeers: {}, from: null, to: null, info: 'Initializing', roomID: '', textRoomConnected: false, status: 'init'})
-    console.log('this is this after in cdm: ', this.state)
+    // console.log('this is this before in cdm: ', this.state)
+    // this.setState({remoteList: {}, pcPeers: {}, from: null, to: null, info: 'Initializing', roomID: '', textRoomConnected: false, status: 'init'})
+    // console.log('this is this after in cdm: ', this.state)
 
 
     // this.socket.on('connect', function(data) {
     //   console.log('this is connect data: ', data)
+    console.log('This is checking getLocalStream: ', container)
       container.getLocalStream(true, function(stream) {
         console.log('this is stream: ', stream)
         container.localStream = stream;
-        container.setState({selfViewSrc: stream.toURL(), status: 'ready', info: 'Please enter or create room ID'});
-        // container.setState({selfViewSrc: stream.toURL()});
-        // container.setState({status: 'ready', info: 'Please enter or create room ID'});
+        // container.setState({selfViewSrc: stream.toURL(), status: 'ready', info: 'Please enter or create room ID'});
+        container.setState({selfViewSrc: stream.toURL()});
+        container.setState({status: 'ready', info: 'Please enter or create room ID'});
       });
     // });
 
     this.socket.on('exchange', function(data){
-      // console.log('this is exchange data: ', data)
-      // container.state.to = data.to;
-      // container.state.from = data.from;
-      // console.log('this is to and from in state: ', container.state.to, container.state.from)
+      console.log('this is exchange data: ', data)
+      container.state.to = data.to;
+      container.state.from = data.from;
+      console.log('this is to and from in state: ', container.state.to, container.state.from)
       
       container.exchange(data);
     });
@@ -372,31 +373,37 @@ class Video extends Component {
   // }
 
   _timeOut(){
-      // container.getLocalStream(true, function(stream) {
-      //   container.localStream = stream;
-      //   container.setState({selfViewSrc: null,remoteList: {}})
-      //   container.setState({selfViewSrc: stream.toURL()});
-      //   container.setState({status: 'ready', info: 'Please enter or create room ID'});
-      //   container.setState({status: 'connect', info: 'Connecting'});
-      //   container.setState({roomID: 'Test2', countDown: false});
-      //   container.join(container.state.roomID);
-      // });
-      // this.leave(this.state.from)
-      // this.setState({from: null, to: null, status: 'ready', info: 'Please enter or create room ID', roomId: '', textRoomConnected: false})
-
       container.getLocalStream(true, function(stream) {
-        container.props.navigation.navigate('Like')
         container.localStream = stream;
         container.setState({selfViewSrc: null,remoteList: {}})
         container.setState({selfViewSrc: stream.toURL()});
-        container.setState({status: 'ready'});
+        container.setState({status: 'ready', info: 'Please enter or create room ID'});
         container.setState({status: 'connect', info: 'Connecting'});
-        // call switchRooms here to set roomId
         container.setState({roomID: 'Test2', countDown: false});
-
-        // check store's rooms.length first
+        if(container.state.roomID == 'Test2') {
+          setTimeout(() => container.props.navigation.navigate('Like'), 120000);
+        }
         container.join(container.state.roomID);
       });
+      // this.leave(this.state.from)
+      // this.setState({from: null, to: null, status: 'ready', info: 'Please enter or create room ID', roomId: '', textRoomConnected: false})
+
+      // container.getLocalStream(true, function(stream) {
+      //   container.props.navigation.navigate('Like')
+      //   container.localStream = stream;
+      //   container.setState({selfViewSrc: null,remoteList: {}})
+      //   container.setState({selfViewSrc: stream.toURL()});
+      //   container.setState({status: 'ready'});
+      //   container.setState({status: 'connect', info: 'Connecting'});
+      //   // call switchRooms here to set roomId
+      //   container.setState({roomID: 'Test2', countDown: false});
+      //     this.leave(this.state.from)
+      // this.setState({from: null, to: null, status: 'ready', info: 'Please enter or create room ID', roomId: '', textRoomConnected: false})
+      //   // check store's rooms.length first
+      //   container.join(container.state.roomID);
+      // });
+       // this.leave(this.state.from)
+      // this.setState({from: null, to: null, status: 'ready', info: 'Please enter or create room ID', roomId: '', textRoomConnected: false})
       console.log('this is state checking after timeout: ', this.state)
   }
 
@@ -436,13 +443,13 @@ class Video extends Component {
          <Text style={styles.welcome}>
            {this.state.info}
            {this.state.info == 'One peer join!' && this.state.countDown ? <CountdownCircle
-           seconds={5}
+           seconds={120}
            radius={30}
            borderWidth={8}
            color="#ff003f"
            bgColor="#fff"
            textStyle={{ fontSize: 20 }}
-           onTimeElapsed={() => this._timeOut()}
+           onTimeElapsed={() => {this._timeOut()}}
        /> : null}
          </Text>
         {this.state.info === 'One peer leave!' ? 
